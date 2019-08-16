@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover"
+        />
+
+        <base href="/" />
+
+        <title>Layout Primitives</title>
+
+        <meta property="og:site_name" content="Layout Primitives" />
+        <meta property="og:title" content="Layout Primitives" />
+
+        <meta name="author" content="Compose layouts using CSS layout primitives" />
+
+        <meta
+            name="description"
+            content="Compose layouts using CSS layout primitives"
+        />
+        <meta
+            property="og:description"
+            content="Compose layouts using CSS layout primitives"
+        />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://deckdeckgo.com" />
+
+        <meta
+            property="og:image"
+            content="https://deckdeckgo.com/assets/img/deckdeckgo.png"
+        />
+        <meta property="og:image:type" content="image/png" />
+
+        <!-- Favicon -->
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="assets/favicon/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="assets/favicon/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="assets/favicon/favicon-16x16.png"
+        />
+        <link rel="shortcut icon" href="assets/favicon/favicon.ico" />
+        <meta name="msapplication-TileColor" content="#3880ff" />
+        <meta
+            name="msapplication-config"
+            content="assets/favicon/browserconfig.xml"
+        />
+        <meta name="theme-color" content="#3880ff" />
+
+        <script>
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", async () => {
+                    try {
+                        await navigator.serviceWorker.register("service-worker.js");
+                    } catch (e) {
+                        console.warn("No service worker registered");
+                    }
+                });
+            }
+        </script>
+
+        <link rel="manifest" href="manifest.json" />
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="msapplication-tap-highlight" content="no" />
+
+        <style>
+        /* Until Web Components are loaded, don't display content */
+            body {
+                background: #3880ff;
+            }
+
+            ion-app.loading,
+            ion-app.loading a {
+                color: transparent;
+            }
+
+            ion-app.loading a {
+                color: transparent;
+            }
+
+            ion-app.loading {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <ion-app class="loading">
+            <ion-content force-overscroll="false" scroll-y="false">
+                <deckgo-deck id="slider" pager-percentage="false">
+                <!-- BEGIN: Edit your slides -->
+
+                <deckgo-slide-title>
+                    <h1 slot="title">Every Layout</h1>
+                    <div no-shadow slot="content">
+                    <h3>
+                        Building context independent layouts using CSS composition 🚀
+                    </h3>
+                    </div>
+                </deckgo-slide-title>
+
+                <deckgo-slide-split style="--slide-split-title-display: show">
+                    <h1 slot="title">Stacking</h1>
+                    <div slot="start">
+                    <div
+                        style="border: 1px solid #222; padding: 1rem; width: var(--measure);"
+                    >
+                        <div style="border: 1px solid black">item</div>
+                        <div style="border: 1px solid black">item</div>
+                        <div style="border: 1px solid black">item</div>
+                    </div>
+                    </div>
+                    <div slot="end">
+                    <div
+                        style="border: 1px solid #222; padding: 1rem; width: var(--measure);"
+                        class="stack"
+                    >
+                        <div style="border: 1px solid black">item</div>
+                        <div style="border: 1px solid black">item</div>
+                        <div style="border: 1px solid black">item</div>
+                    </div>
+                    <code>
+                        <pre slot="code">
+.stack {
+    --space: 1.5rem;
+}
+.stack > * {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.stack > * + * {
+    margin-top: var(--space);
+}
+                        </pre>
+                    </code>
+                </div>
+            </deckgo-slide-split>
+
+            <deckgo-slide-split style="--slide-split-title-display: show">
+                <h1 slot="title">The Box</h1>
+                <div slot="start">
+                    <div
+                        style="border: 1px solid #222; width: var(--measure);"
+                    >
+                        <div class="stack">
+                            <div style="border: 1px solid black">item</div>
+                            <div style="border: 1px solid black">item</div>
+                            <div style="border: 1px solid black">item</div>
+                        </div>
+                    </div>
+                </div>
+                <div slot="end">
+                    <div
+                        class="box"
+                        style="border: 1px solid #222;  width: var(--measure);"
+                    >
+                        <div class="stack">
+                            <div style="border: 1px solid black">item</div>
+                            <div style="border: 1px solid black">item</div>
+                            <div style="border: 1px solid black">item</div>
+                        </div>
+                    </div>
+                    <pre >
+.box {
+    padding: var(--s1);
+    border: var(--border-thin) solid;
+    --color-light: #fff;
+    --color-dark: #000;
+    color: var(--color-dark);
+    background-color: var(--color-light);
+}
+
+.box * {
+    color: inherit;
+}
+                    </pre>
+                </div>
+            </deckgo-slide-split>
+
+            <deckgo-slide-split style="--slide-split-title-display: show">
+                <h1 slot="title">The Center</h1>
+                <div slot="start">
+                    <div
+                        style="border: 1px solid #222;  width: var(--measure); height: 5rem;"
+                    >
+                        <span style="border: 1px solid black">side</span>
+                        <span style="border: 1px solid black">main</span>
+                    </div>
+                </div>
+                <div slot="end">
+                    <div class="center intrinsic center-text" style="border: 1px solid #222; width: var(--measure); height: 5rem;"
+                    >
+                        <span style="border: 1px solid black">side</span>
+                        <span style="border: 1px solid black">main</span>
+                    </div>
+                    <br/>
+                    <div class="center center-text" style="border: 1px solid #222;  width: var(--measure); height: 5rem;"
+                    >
+                        <span style="border: 1px solid black">side</span>
+                        <span style="border: 1px solid black">main</span>
+                    </div>
+                    <br/>
+                    <pre>
+.center {
+    box-sizing: content-box;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: var(--measure);
+    padding-left: 5;
+    padding-right: 5;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.intrinsic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+                        </pre>
+                    </div>
+                </div>
+            </deckgo-slide-split>
+
+            <deckgo-slide-split style="--slide-split-title-display: show">
+                <h1 slot="title">The Cluster</h1>
+                <div slot="start">
+                    <div
+                        style="border: 1px solid #222;  padding: 1rem; width: var(--measure)"
+                    >
+                        <span style="border: 1px solid black">child</span>
+                        <span style="border: 1px solid black">
+                            <span style="border: 1px solid black">item</span>
+                            <span style="border: 1px solid black">item</span>
+                            <span style="border: 1px solid black">item</span>
+                        </span>
+                    </div>
+                </div>
+                <div slot="end">
+                    <div
+                        class="cluster"
+                        style="border: 1px solid #222;  width: var(--measure); padding: 1rem;"
+                        [style.width.rem]="range.value"
+                    >
+                        <span style="border: 1px solid black">child</span>
+                        <span style="border: 1px solid black">
+                            <span style="border: 1px solid black">item</span>
+                            <span style="border: 1px solid black">item</span>
+                            <span style="border: 1px solid black">item</span>
+                        </span>
+                    </div>
+                    <pre >
+.cluster {
+    --space: 1rem;
+    overflow: hidden;
+}
+
+.cluster > * {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin: calc(var(--space) / 2 * -1);
+}
+
+.cluster > * > * {
+    margin: calc(var(--space) / 2);
+}
+                    </pre>
+                </div>
+            </deckgo-slide-split>
+
+            <deckgo-slide-split style="--slide-split-title-display: show">
+                <h1 slot="title">The Sidebar</h1>
+                <div slot="start">
+                        <div 
+                        style="border: 1px solid #222;  width: var(--measure)">
+                            <div> <!-- intermediary wrapper -->
+                                <div>
+                                    <div class="stack" style="border: 1px solid #222;">
+                                        <h5>sidebar</h5>
+                                        <div>home</div>
+                                        <div>about</div>
+                                    </div>
+                                </div>
+                                <div style="border: 1px solid #222;">main content</div>
+                            </div>
+                        </div>
+                </div>
+                <div slot="end">
+                        <div class="with-sidebar" 
+                        style="border: 1px solid #222;  width: var(--measure)">
+                            <div> <!-- intermediary wrapper -->
+                                <div>
+                                    <div class="stack" style="border: 1px solid #222;">
+                                        <h5>sidebar</h5>
+                                        <div>home</div>
+                                        <div>about</div>
+                                    </div>
+                                </div>
+                                <div style="border: 1px solid #222;">main content</div>
+                            </div>
+                        </div>
+                                
+                    <pre >
+.with-sidebar {
+    overflow: hidden;
+}
+
+.with-sidebar > * {
+    display: flex;
+    flex-wrap: wrap;
+    margin: calc(0px / 2 * -1);
+}
+
+.with-sidebar > * > * {
+    margin: calc(0px / 2);
+    flex-grow: 1;
+}
+
+.with-sidebar > * > :last-child {
+    flex-basis: 0;
+    flex-grow: 999;
+    min-width: calc(50% - 0px);
+}
+
+                    </pre>
+                </div>
+            </deckgo-slide-split>
+
+        <deckgo-slide-split style="--slide-split-title-display: show">
+            <h1 slot="title">The Switcher</h1>
+            <div slot="start">
+                <div
+                    style="border: 1px solid #222; width: var(--measure);"
+                >
+                    <div >
+                        <div>
+                            <span style="border: 1px solid black">item</span>
+                            <span style="border: 1px solid black">item</span>
+                            <span style="border: 1px solid black">item</span>
+                            <span style="border: 1px solid black">item</span>
+                            <span style="border: 1px solid black">item</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div slot="end">
+                <div
+                    style="border: 1px solid #222; width: var(--measure);"
+                >
+                    <div class="switcher">
+                        <div>
+                            <span style="border: 1px solid black">item</span>
+                            <span style="border: 1px solid black">item</span>
+                            <span style="border: 1px solid black">item</span>
+                            <span style="border: 1px solid black">item</span>
+                            <span style="border: 1px solid black">item</span>
+                        </div>
+                    </div>
+                </div>
+                <pre >
+.switcher > * {
+    display: flex;
+    flex-wrap: wrap;
+    margin: calc((var(--s1) / 2) * -1);
+}
+
+.switcher > * > * {
+    flex-grow: 1;
+    flex-basis: calc((150px - (100% - var(--s1))) * 999);
+    margin: calc(var(--s1) / 2);
+}
+
+.switcher > * > :nth-last-child(n+6),
+.switcher > * > :nth-last-child(n+6) ~ * {
+    flex-basis: 100%;
+}
+                </pre>
+            </div>
+        </deckgo-slide-split>
+
+        <deckgo-slide-split style="--slide-split-title-display: show">
+            <h1 slot="title">The Cover</h1>
+            <div slot="start">
+                <div
+                style="position: relative; border: 1px solid #222; width: var(--measure); max-height: 40rem; height: 40rem;  min-height: 40rem;">
+                    <div>
+                        <div style="display: flex">
+                            <div>Image</div>
+                            <div class="switcher" style="margin-left: auto">
+                                <div>
+                                    <span style="border: 1px solid black">header</span>
+                                    <span style="border: 1px solid black">header</span>
+                                    <span style="border: 1px solid black">header</span>
+                                    <span style="border: 1px solid black">header</span>
+                                    <span style="border: 1px solid black">header</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="centered">Welcome to a layout presentation</div>
+                        <div style="text-align: center">Scroll for more</div>
+                    </div>
+                    <div style="text-align: center; font-weight: bold;">Below the fold</div>
+                </div>
+                <pre >
+.cover {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 1rem;
+}
+.cover > * {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+                </pre>
+            </div>
+            <div slot="end">
+                <div style="position: relative; border: 1px solid #222; width: var(--measure); max-height: 40rem; height: 40rem; min-height: 40rem;">
+                    <div class="cover">
+                            <div style="display: flex">
+                                <div>Image</div>
+                                <div class="switcher" style="margin-left: auto">
+                                    <div>
+                                        <span style="border: 1px solid black">header</span>
+                                        <span style="border: 1px solid black">header</span>
+                                        <span style="border: 1px solid black">header</span>
+                                        <span style="border: 1px solid black">header</span>
+                                        <span style="border: 1px solid black">header</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="centered">Welcome to a layout presentation</div>
+                            <div style="text-align: center; ">Scroll for more</div>
+                        </div>
+                        <div style="text-align: center; font-weight: bold;">Below the fold</div>
+                        <pre >
+.cover > :first-child:not(h1) {
+    margin-top: 0;
+}
+.cover > :last-child:not(h1) {
+    margin-bottom: 0;
+}
+.cover > h1 {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+                        </pre>
+                </div>
+            </div>
+        </deckgo-slide-split>
+
+        <deckgo-slide-split style="--slide-split-title-display: show">
+            <h1 slot="title">The Grid</h1>
+            <div slot="start">
+                <div
+                    style="border: 1px solid #222;  width: var(--measure)"
+                >
+                    <div data-min="2rem">
+                        <span style="border: 1px solid #555;">A</span>
+                        <span style="border: 1px solid #555;">B</span>
+                        <span style="border: 1px solid #555;">C</span>
+                        <span style="border: 1px solid #555;">D</span>
+                        <span style="border: 1px solid #555;">E</span>
+                        <span style="border: 1px solid #555;">F</span>
+                    </div>
+                </div>
+            </div>
+            <div slot="end">
+                    <div
+                        style="position: relative; border: 1px solid #222;  width: var(--measure)"
+                    >
+                        <div class="grid sm" data-min="2rem">
+                                <span style="border: 1px solid #555;">A</span>
+                                <span style="border: 1px solid #555;">B</span>
+                                <span style="border: 1px solid #555;">C</span>
+                                <span style="border: 1px solid #555;">D</span>
+                                <span style="border: 1px solid #555;">E</span>
+                                <span style="border: 1px solid #555;">F</span>
+                        </div>
+                    </div>
+                <div
+                    style="position: relative; border: 1px solid #222;  width: var(--measure)"
+                >
+                    <div class="grid aboveMin sm" data-min="2rem">
+                        <span style="border: 1px solid #555;">A</span>
+                        <span style="border: 1px solid #555;">B</span>
+                        <span style="border: 1px solid #555;">C</span>
+                        <span style="border: 1px solid #555;">D</span>
+                        <span style="border: 1px solid #555;">E</span>
+                        <span style="border: 1px solid #555;">F</span>
+                    </div>
+                </div>
+                <pre >
+.grid {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: 100%;
+}
+.grid.aboveMin {
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+}
+@supports (width: min(20rem, 100%)) {
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    }
+}
+                </pre>
+            </div>
+        </deckgo-slide-split>
+
+        <deckgo-slide-split style="--slide-split-title-display: show">
+            <h1 slot="title">The Frame</h1>
+            <div slot="start">
+                <div
+                class="grid"
+                data-min="2rem"
+                    style="border: 1px solid #222;  width: var(--measure);"
+                >
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1558981000-f294a6ed32b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3450&q=80" />
+                    </div>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1565808065893-e294b359f004?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80" />
+                    </div>
+                    <div>
+                        <img src="https://images.unsplash.com/flagged/photo-1565829584998-df921669ed0b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80" />
+                    </div>
+            </div>
+            </div>
+            <div slot="end">
+                <div
+                    class="grid"
+                    data-min="2rem"
+                    style="border: 1px solid #222;  width: var(--measure);"
+                >
+                    <div class="frame">
+                        <img src="https://images.unsplash.com/photo-1558981000-f294a6ed32b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3450&q=80" />
+                    </div>
+                    <div class="frame">
+                        <img src="https://images.unsplash.com/photo-1565808065893-e294b359f004?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80" />
+                    </div>
+                    <div class="frame">
+                        <img src="https://images.unsplash.com/flagged/photo-1565829584998-df921669ed0b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80" />
+                    </div>
+                </div>
+                <pre >
+.frame {
+    --n: 6;
+    --d: 9;
+    padding-bottom: calc(var(--n) / var(--d) * 100%);
+    position: relative;
+}
+.frame > * {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+                </pre>
+            </div>
+        </deckgo-slide-split>
+
+        <deckgo-slide-content>
+            <h1 slot="title">Example 1</h1>
+            <div slot="content">
+                <div style="width: var(--doubleMeasure); position: relative; max-height: 40rem">
+                    <div class="with-sidebar" >
+                        <div>
+                            <div class="stack">
+                                <div><button>Home</button></div>
+                                <div><button>Store</button></div>
+                                <div><button>Blog</button></div>
+                                <div><button>Settings</button></div>
+                            </div>
+                            <div class="stack">
+                                <div class="switch">
+                                    <button>Sort</button>
+                                    <button>Filter</button>
+                                    <button>Something</button>
+                                    <button>Overflow</button>
+                                </div>
+                                <div class="grid"  >
+                                        <div class="box" style="border: 1px solid #666">
+                                            <div class="stack">
+                                                <div class="frame">
+                                                    <img src="https://images.unsplash.com/photo-1558981000-f294a6ed32b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3450&q=80" />
+                                                </div>
+                                                <div style="font-size: var(--s0); max-height: 10rem; overflow: hidden;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pharetra diam nec leo commodo congue. Mauris sed ultrices leo, non porta tortor. Nullam elementum, dui sit amet tristique vulputate, metus nisl facilisis est, nec tempor dui tortor at lectus. Mauris finibus, diam sit amet fringilla malesuada, turpis ligula euismod elit, tincidunt ultricies justo urna rhoncus ipsum. Suspendisse lacinia ac libero et porttitor. Sed sit amet pulvinar turpis. Curabitur nec dolor elementum, ultricies leo ut, venenatis ante. Sed volutpat justo tellus, sit amet molestie eros scelerisque sed. Nulla ultrices venenatis tortor. Morbi gravida fermentum dolor vitae fermentum. Pellentesque viverra ligula justo, at dignissim augue tincidunt ut.</div>
+                                                <div class="cluster">  
+                                                    <ion-button>Button</ion-button>
+                                                    <ion-button>Button</ion-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box" style="border: 1px solid #666">
+                                            <div class="stack">
+                                                <div class="frame">
+                                                    <img src="https://images.unsplash.com/photo-1565808065893-e294b359f004?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80" />
+                                                </div>
+                                                <div style="font-size: var(--s0); max-height: 10rem; overflow: hidden;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pharetra diam nec leo commodo congue. Mauris sed ultrices leo, non porta tortor. Nullam elementum, dui sit amet tristique vulputate, metus nisl facilisis est, nec tempor dui tortor at lectus. Mauris finibus, diam sit amet fringilla malesuada, turpis ligula euismod elit, tincidunt ultricies justo urna rhoncus ipsum. Suspendisse lacinia ac libero et porttitor. Sed sit amet pulvinar turpis. Curabitur nec dolor elementum, ultricies leo ut, venenatis ante. Sed volutpat justo tellus, sit amet molestie eros scelerisque sed. Nulla ultrices venenatis tortor. Morbi gravida fermentum dolor vitae fermentum. Pellentesque viverra ligula justo, at dignissim augue tincidunt ut.</div>
+                                                <div class="cluster">  
+                                                    <ion-button>Button</ion-button>
+                                                    <ion-button>Button</ion-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box" style="border: 1px solid #666">
+                                            <div class="stack">
+                                                <div class="frame">
+                                                    <img src="https://images.unsplash.com/photo-1565786122857-65d164d8c04d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80" />
+                                                </div>
+                                                <div style="font-size: var(--s0); max-height: 10rem; overflow: hidden;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pharetra diam nec leo commodo congue. Mauris sed ultrices leo, non porta tortor. Nullam elementum, dui sit amet tristique vulputate, metus nisl facilisis est, nec tempor dui tortor at lectus. Mauris finibus, diam sit amet fringilla malesuada, turpis ligula euismod elit, tincidunt ultricies justo urna rhoncus ipsum. Suspendisse lacinia ac libero et porttitor. Sed sit amet pulvinar turpis. Curabitur nec dolor elementum, ultricies leo ut, venenatis ante. Sed volutpat justo tellus, sit amet molestie eros scelerisque sed. Nulla ultrices venenatis tortor. Morbi gravida fermentum dolor vitae fermentum. Pellentesque viverra ligula justo, at dignissim augue tincidunt ut.</div>
+                                                <div class="cluster">  
+                                                    <ion-button>Button</ion-button>
+                                                    <ion-button>Button</ion-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box" style="border: 1px solid #666">
+                                            <div class="stack">
+                                                <div class="frame">
+                                                    <img src="https://images.unsplash.com/photo-1565847179096-9af38a6af8a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80" />
+                                                </div>
+                                                <div style="font-size: var(--s0); max-height: 10rem; overflow: hidden;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pharetra diam nec leo commodo congue. Mauris sed ultrices leo, non porta tortor. Nullam elementum, dui sit amet tristique vulputate, metus nisl facilisis est, nec tempor dui tortor at lectus. Mauris finibus, diam sit amet fringilla malesuada, turpis ligula euismod elit, tincidunt ultricies justo urna rhoncus ipsum. Suspendisse lacinia ac libero et porttitor. Sed sit amet pulvinar turpis. Curabitur nec dolor elementum, ultricies leo ut, venenatis ante. Sed volutpat justo tellus, sit amet molestie eros scelerisque sed. Nulla ultrices venenatis tortor. Morbi gravida fermentum dolor vitae fermentum. Pellentesque viverra ligula justo, at dignissim augue tincidunt ut.</div>
+                                                <div class="cluster">  
+                                                    <ion-button>Button</ion-button>
+                                                    <ion-button>Button</ion-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box" style="border: 1px solid #666">
+                                            <div class="stack">
+                                                <div class="frame">
+                                                    <img src="https://images.unsplash.com/flagged/photo-1565829584998-df921669ed0b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80" />
+                                                </div>
+                                                <div style="font-size: var(--s0); max-height: 10rem; overflow: hidden;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pharetra diam nec leo commodo congue. Mauris sed ultrices leo, non porta tortor. Nullam elementum, dui sit amet tristique vulputate, metus nisl facilisis est, nec tempor dui tortor at lectus. Mauris finibus, diam sit amet fringilla malesuada, turpis ligula euismod elit, tincidunt ultricies justo urna rhoncus ipsum. Suspendisse lacinia ac libero et porttitor. Sed sit amet pulvinar turpis. Curabitur nec dolor elementum, ultricies leo ut, venenatis ante. Sed volutpat justo tellus, sit amet molestie eros scelerisque sed. Nulla ultrices venenatis tortor. Morbi gravida fermentum dolor vitae fermentum. Pellentesque viverra ligula justo, at dignissim augue tincidunt ut.</div>
+                                                <div class="cluster">  
+                                                    <ion-button>Button</ion-button>
+                                                    <ion-button>Button</ion-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box" style="border: 1px solid #666">
+                                            <div class="stack">
+                                                <div class="frame">
+                                                    <img src="https://images.unsplash.com/photo-1565902623292-b441da740bee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" />
+                                                </div>
+                                                <div style="font-size: var(--s0); max-height: 10rem; overflow: hidden;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pharetra diam nec leo commodo congue. Mauris sed ultrices leo, non porta tortor. Nullam elementum, dui sit amet tristique vulputate, metus nisl facilisis est, nec tempor dui tortor at lectus. Mauris finibus, diam sit amet fringilla malesuada, turpis ligula euismod elit, tincidunt ultricies justo urna rhoncus ipsum. Suspendisse lacinia ac libero et porttitor. Sed sit amet pulvinar turpis. Curabitur nec dolor elementum, ultricies leo ut, venenatis ante. Sed volutpat justo tellus, sit amet molestie eros scelerisque sed. Nulla ultrices venenatis tortor. Morbi gravida fermentum dolor vitae fermentum. Pellentesque viverra ligula justo, at dignissim augue tincidunt ut.</div>
+                                                <div class="cluster">  
+                                                    <ion-button>Button</ion-button>
+                                                    <ion-button>Button</ion-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </deckgo-slide-content>
+
+        <deckgo-slide-content>
+            <h1 slot="title">Example 2</h1>
+            <div slot="content" style="width: var(--doubleMeasure); position: relative; max-height: 40rem">
+                    <div class="with-sidebar" >
+                        <div>
+                            <div class="stack">
+                                <div><button>Home</button></div>
+                                <div><button>Store</button></div>
+                                <div><button>Blog</button></div>
+                                <div><button>Settings</button></div>
+                            </div>
+                            <form>
+                                <div class="switcher">
+                                    <div>
+                                        <div class="stack" style="max-width: 20rem; padding: 1rem; position: relative;">
+                                            <input placeholder="First name"/>
+                                            <input placeholder="Last name" />
+                                            <input placeholder="Email" type="email" />
+                                        </div>
+                                        <div class="switcher">
+                                            <div>
+                                                <div class="stack" style="max-width: 20rem; padding: 1rem; position: relative;">
+                                                    <input placeholder="Address" />
+                                                    <input placeholder="City" />
+                                                </div>
+                                                <div class="stack" style="max-width: 20rem; padding: 1rem; position: relative;">
+                                                    <input placeholder="State" />
+                                                    <input placeholder="Zip" type="number" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        </deckgo-slide-content>
+        <deckgo-slide-content>
+            <h1 slot="title">Questions?</h1>
+        </deckgo-slide-content>
+
+        <!-- END: Edit your slides -->
+
+        <a
+            href="#"
+            onclick="openMenu(event)"
+            slot="actions"
+            style="color: inherit;"
+            ><ion-icon name="more"></ion-icon
+        ></a>
+    </deckgo-deck>
+
+    <deckgo-remote></deckgo-remote>
+</ion-content>
+
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed" id="navigation">
+
+        <ion-range style="width: 30rem" value="200" onmousedown="startListeningToRange(event)" onmousemove="updateRange(event)" onmouseup="stopListeningToRange(event)" min="0" max="800" color="secondary">
+            <ion-label slot="start">0</ion-label>
+            <ion-label slot="end">800</ion-label>
+        </ion-range>
+               
+          
+
+        <button onclick="previousSlide()" class="navigation ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-icon
+            name="arrow-back"
+            ariaLabel="Previous slide"
+            style="font-size: 1.4em;"
+          ></ion-icon>
+        </button>
+
+
+        <button onclick="nextSlide()" class="navigation ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-icon
+            name="arrow-forward"
+            ariaLabel="Next slide"
+            style="font-size: 1.4em;"
+          ></ion-icon>
+        </button>
+
+        <button
+          onclick="presentSlidePicker()"
+          class="navigation ion-activatable"
+        >
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-icon
+            name="list"
+            md="md-list"
+            ios="md-list"
+            ariaLabel="Jump to a particular slide"
+            style="font-size: 1.4em;"
+          ></ion-icon>
+        </button>
+
+        <button
+          onclick="toggleFullScreen()"
+          class="navigation ion-activatable hide-on-mobile"
+        >
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-icon
+            name="expand"
+            ariaLabel="Full screen"
+            style="font-size: 1.4em;"
+          ></ion-icon>
+        </button>
+      </ion-fab>
+
+      <!-- Ionic components anchors -->
+      <ion-popover-controller></ion-popover-controller>
+      <ion-modal-controller></ion-modal-controller>
+      <ion-alert-controller></ion-alert-controller>
+
+      <web-social-share
+        show="false"
+        style="--web-social-share-backdrop-opacity: 0.5;"
+      >
+        <ion-icon
+          name="logo-twitter"
+          ariaLabel="Twitter"
+          slot="twitter"
+          style="color: #00aced; font-size: 1.6rem; display: block;"
+        ></ion-icon>
+        <ion-icon
+          name="logo-reddit"
+          ariaLabel="Reddit"
+          slot="reddit"
+          style="font-size: 1.6rem; display: block;"
+        ></ion-icon>
+        <ion-icon
+          name="logo-linkedin"
+          ariaLabel="Linkedin"
+          slot="linkedin"
+          style="color: #0077b5; font-size: 1.6rem; display: block;"
+        ></ion-icon>
+        <ion-icon
+          name="mail"
+          slot="email"
+          ariaLabel="Email"
+          style="color: #ff8ea3; font-size: 1.6rem; display: block;"
+        ></ion-icon>
+        <ion-icon
+          name="logo-whatsapp"
+          ariaLabel="WhatsApp"
+          slot="whatsapp"
+          style="color: #25D366; font-size: 1.6rem; display: block;"
+        ></ion-icon>
+      </web-social-share>
+    </ion-app>
+
+    <noscript>
+      Please enable Javascript to access this presentation.
+    </noscript>
+  </body>
+</html>
