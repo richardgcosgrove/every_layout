@@ -115,6 +115,27 @@ ion-fab {
   flex-grow: 999;
   min-width: calc(50% - var(--s1));
 }
+.with-sidebar {
+  overflow: hidden;
+}
+
+.sidebar > * {
+  display: flex;
+  flex-wrap: wrap;
+  margin: calc(0px / 2 * -1);
+}
+
+.sidebar > * > * {
+  margin: calc(0px / 2);
+  flex-basis: 200px;
+  flex-grow: 1;
+}
+
+.sidebar > * > :first-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-width: calc(50% - 0px);
+}
 
 .switcher > * {
   display: flex;
@@ -124,7 +145,7 @@ ion-fab {
 
 .switcher > * > * {
   flex-grow: 1;
-  flex-basis: calc((150px - (100% - var(--s1))) * 999);
+  flex-basis: calc((400px - (100% - var(--s1))) * 999);
   margin: calc(var(--s1) / 2);
 }
 
